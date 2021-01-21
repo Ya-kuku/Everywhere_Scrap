@@ -1,4 +1,4 @@
-package com.example.backend.Test;
+package com.example.backend.news;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -21,7 +21,7 @@ public class MongoApplication {
     public ApplicationRunner applicationRunner() {
         return args -> {
             Account account = new Account();
-            account.setEmail("ektha3869@naver.com");
+            account.setEmail("ektha@naver.com");
             account.setUsername("som");
 
             mongoTemplate.insert(account);
