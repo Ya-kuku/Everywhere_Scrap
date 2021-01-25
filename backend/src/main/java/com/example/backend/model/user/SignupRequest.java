@@ -6,11 +6,11 @@ import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-// import lombok.ToString;
+import lombok.ToString;
 
 
 @Valid
-// @ToString
+@ToString
 @Data
 
 public class SignupRequest {

@@ -83,6 +83,13 @@ public class AccountController {
                         user.setNickname(request.getNickname());
                         user.setPhone(request.getPhone());
 
+                        userDao.save(user);
+
+                        final BasicResponse result = new BasicResponse();
+                        result.status = true;
+                        result.data = "회원가입 완료";
+                        response = new ResponseEntity< >(result, HttpStatus.OK);
                 }
+                return response;
         }
 }
