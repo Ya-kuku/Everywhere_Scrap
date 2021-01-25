@@ -29,9 +29,13 @@ public class User {
     private String uid;
     
     @JsonIgnore
-    private String eamil;
+    private String email;
     private String password;
+
+    private String nickname;
+    private String phone;
 
     @Column(insertable = false, updatable = false)
     private LocalDateTime createDate;
+
 }
