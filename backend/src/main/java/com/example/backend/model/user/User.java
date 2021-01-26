@@ -2,42 +2,25 @@ package com.example.backend.model.user;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
 @Data
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-
+@Document(collection = "account")
 public class User {
     
     @Id
-    
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String uid;
-    
-    @JsonIgnore
+
     private String email;
     private String password;
 
     private String nickname;
     private String phone;
 
-    @Column(insertable = false, updatable = false)
     private LocalDateTime createDate;
 
 }
