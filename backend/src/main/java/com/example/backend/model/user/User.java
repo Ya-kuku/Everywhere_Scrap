@@ -2,7 +2,7 @@ package com.example.backend.model.user;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

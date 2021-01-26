@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,12 +39,10 @@ public class AccountController {
 
         @GetMapping("/account/login")
         @ApiOperation(value="로그인")
-        public ResponseEntity<Object> getUserByEmailAndPassword(@RequestParam(required=true) final String email,
-                                        @RequestParam(required=true) final String password) {
+        public Object login(@RequestParam(required=true) final String email,
+                            @RequestParam(required=true) final String password) {
                                                 
                 Optional<User> userOpt = userRepository.findByEmailAndPassword(email, password);
-                System.out.println("aaaaa");
-                System.out.println(userOpt);
                 ResponseEntity<Object> response = null;
 
                 if (userOpt.isPresent()) {
@@ -76,9 +75,6 @@ public class AccountController {
 
                 final User email_check = userRepository.findByEmail(request.getEmail());
                 final User nickname_check = userRepository.findByNickname(request.getNickname());
-                System.out.println(email_check);
-                System.out.println(nickname_check);
-                System.out.println(request);
                 
                 ResponseEntity<Object> response = null;
                 if(email_check != null) {
@@ -107,4 +103,20 @@ public class AccountController {
                 }
                 return response;
         }
+        
+        @DeleteMapping("/account/delete")
+        @ApiOperation(value = "계정삭제")
+        public Object delete(String uid) {
+
+                ResponseEntity<Object> response = null;
+                userRepository.deleteById(uid);
+
+                final BasicResponse result = new BasicResponse();
+                result.status = true;
+                result.data = "success";
+                response = new ResponseEntity<>(result, HttpStatus.OK);
+                
+                return response;
+        }
+
 }
