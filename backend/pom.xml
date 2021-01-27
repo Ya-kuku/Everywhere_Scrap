@@ -24,6 +24,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- 토큰 -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
 		<!-- swaager 셋팅 -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -69,6 +76,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+
 		
 		<!-- 유효성 검사 spring boot 2.3 이상 버전에서는 추가해줘야 됨 -->
 		<dependency>

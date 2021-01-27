@@ -53,7 +53,7 @@ export default {
                 console.log(signupData)
             })
             .catch((err) => {
-                console.log(err.data)
+                console.log(err)
             })
         }
     },

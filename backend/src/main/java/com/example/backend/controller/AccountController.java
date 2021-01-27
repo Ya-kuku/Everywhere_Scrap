@@ -9,6 +9,8 @@ import com.example.backend.model.BasicResponse;
 import com.example.backend.model.user.SignupRequest;
 import com.example.backend.model.user.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.security.JwtTokenProvider;
+import com.example.backend.security.JwtAuthentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,10 @@ public class AccountController {
         @Autowired
         UserRepository userRepository;
 
+        
+        @Autowired
+        JwtTokenProvider tokenProvider;
+
         @GetMapping("/account/login")
         @ApiOperation(value="로그인")
         public Object login(@RequestParam(required=true) final String email,
@@ -44,13 +50,25 @@ public class AccountController {
                                                 
                 Optional<User> userOpt = userRepository.findByEmailAndPassword(email, password);
                 ResponseEntity<Object> response = null;
-
+                
+                final BasicResponse result = new BasicResponse();
                 if (userOpt.isPresent()) {
-                        final BasicResponse result = new BasicResponse();
+
+                        User user = new User();
+                        user.setUid(userOpt.get().getUid());
+                        user.setEmail(email);
+                        user.setPassword(password);
+
+                        String jwt = tokenProvider.generateToken(user);
+                        result.object = new JwtAuthentication(jwt);
+
                         result.status = true;
                         result.data = "success";
+                        System.out.println(result);
                         response =  new ResponseEntity<>(result, HttpStatus.OK);
                 } else {
+                        result.status = true;
+                        result.data = "fail";
                         response =  new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
                 }
                 
