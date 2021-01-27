@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import constants from '../lib/constants.js'
 
 import Main from '../views/main/Main.vue'
+import Login from '../views/user/Login.vue'
+import Signup from '../views/user/Signup.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -10,6 +13,16 @@ const routes = [
     path: '/',
     name: constants.URL_type.MAIN,
     component: Main,
+  },
+  {
+    path: '/user/login',
+    name: constants.URL_type.USER.LOGIN,
+    component: Login,
+  },
+  {
+    path: '/user/signup',
+    name: constants.URL_type.USER.SIGNUP,
+    component: Signup,
   },
 ]
 

@@ -1,11 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
-    </div>
+    <Header :isHeader="isHeader">
+
+    </Header>
     <router-view/>
   </div>
 </template>
 
+<script>
+import Header from './components/Header'
+// import constants from '@/lib/constants'
+export default {
+    name: 'App',
+    components: {
+      Header
+    },
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

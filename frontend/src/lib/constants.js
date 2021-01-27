@@ -3,5 +3,9 @@ export default {
     SERVER_URL: "http://localhost:8080",
     URL_type: {
         MAIN: "main",
+        USER : {
+            SIGNUP : "signup",
+            LOGIN : "login",
+        },
     }
 }
