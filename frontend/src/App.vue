@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <Header :isHeader="isHeader">
-
-    </Header>
+    <Header />
     <router-view/>
   </div>
 </template>
