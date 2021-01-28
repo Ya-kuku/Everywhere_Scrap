@@ -1,0 +1,9 @@
+.navbar-nav {
+    text-align: right;
+}
+
+.menu {
+    float :right;
+    text-align: right;
+    margin-right: 0;
+}

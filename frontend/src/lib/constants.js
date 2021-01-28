@@ -4,8 +4,12 @@ export default {
     URL_type: {
         MAIN: "main",
         USER : {
-            SIGNUP : "signup",
-            LOGIN : "login",
+            SIGNUP: "signup",
+            LOGIN: "login",
+            PROFILE: "profile",
+        },
+        NEWS : {
+            NEWSMAIN: "newsmain",
         },
     }
 }

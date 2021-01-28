@@ -5,6 +5,7 @@ import constants from '../lib/constants.js'
 import Main from '../views/main/Main.vue'
 import Login from '../views/user/Login.vue'
 import Signup from '../views/user/Signup.vue'
+import Profile from '../views/user/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/user/signup',
     name: constants.URL_type.USER.SIGNUP,
     component: Signup,
+  },
+  {
+    path: '/user/profile',
+    name: constants.URL_type.USER.PROFILE,
+    component: Profile,
   },
 ]
 
