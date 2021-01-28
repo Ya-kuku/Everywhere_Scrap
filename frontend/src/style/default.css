@@ -1,0 +1,22 @@
+* {
+    background-color: #939597;
+}
+
+html,
+body,
+#app {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+a {
+    color:#F5dF4D;
+}
+
+a:hover {
+    color:#ffdd00;
+}
+
+.logo {
+    width:5%;
+}

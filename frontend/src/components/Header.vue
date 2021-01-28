@@ -1,28 +1,34 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Everywhere Scrap</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <!-- <a class="nav-link active" aria-current="page" href="/">Home</a> -->
-        <a class="nav-link" href="/user/login">Login</a>
-        <a class="nav-link" href="/user/signup">SignUp</a>
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">maple story</a>
-      </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand main-title" href="/"><img class="logo" :src="logo" /> Everywhere Scrap</a>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/user/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signup">SignUp</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Article</a>
+        </li>
+      </ul>
     </div>
-  </div>
-</nav>
+  </nav>
 </template>
 
 <script>
-
+import logo from "../assets/newspaper.png"
 // import axios from "axios";
 // import constats from '@/lib/contstans'
 export default {
-
+  name:"header",
+  data() {
+    return{
+      logo: logo
+    }
+  }
 }
 </script>
 

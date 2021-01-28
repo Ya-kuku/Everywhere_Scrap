@@ -22,7 +22,7 @@ import constants from '../../lib/constants'
 
 export default {
     name: 'login',
-    data: () => {
+    data() {
         return {
             email:'',
             password:'',
