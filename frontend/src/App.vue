@@ -2,17 +2,20 @@
   <div id="app">
     <Header />
     <router-view />
+    <Footer />
   </div>
 </template>
 
 <script>
 import './style/style.js'
 import Header from './components/Header'
-// import constants from '@/lib/constants'
+import Footer from './components/Footer'
+
 export default {
     name: 'App',
     components: {
-      Header
+      Header,
+      Footer
     },
 }
 </script>

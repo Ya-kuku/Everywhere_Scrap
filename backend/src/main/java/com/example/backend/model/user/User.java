@@ -16,11 +16,11 @@ public class User {
     private String uid;
 
     private String email;
+    
     private String password;
 
     private String nickname;
-    private String phone;
 
-    private LocalDateTime createDate;
+    private String phone;
 
 }

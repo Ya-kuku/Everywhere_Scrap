@@ -1,22 +1,49 @@
-* {
-    background-color: #939597;
-}
-
 html,
 body,
 #app {
+    background-color: #EFEFF0;
     min-width: 100vw;
     min-height: 100vh;
 }
 
 a {
-    color:#F5dF4D;
+    /* color:#535557; */
+    color:black;
 }
 
 a:hover {
-    color:#ffdd00;
+    color:black;
 }
+
+.topmg {
+    margin: 10rem auto 0rem auto;
+    min-height: 100vh;
+}
+
 
 .logo {
     width:5%;
+}
+
+button {
+    width:5em;
+    margin:auto 0.5rem;
+    padding:0.7rem;
+    text-align: center;
+    border:0;
+    border-radius: 10px;
+    background-color:#F5dF4D;
+}
+
+button:hover {
+    background-color:#f8ea8c;
+}
+
+input::placeholder {
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width:25rem;
+    height:3rem;
 }

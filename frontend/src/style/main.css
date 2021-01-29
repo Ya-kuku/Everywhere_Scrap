@@ -1,4 +1,30 @@
 .main-img {
+    position: absolute;
     min-width:100vw;
-    max-height:50rem;
+    height:60rem;
+    opacity: 0.3;
+    top:0;
+    left:0;
+}
+
+.container {
+    display:flex;
+    justify-content: space-around;
+}
+.main-btns {
+    position: relative;
+    top:60rem;
+    padding:5rem 0;
+}
+
+.main-btn {
+    border: 0;
+    padding:5rem 0;
+    width: 15rem;
+    margin:auto 2rem;
+    border-radius: 10px;
+    background-color: #f8ea8c;
+    /* color:#F5dF4D; */
+    font-weight: bold;
+    font-size: 1.3rem;
 }

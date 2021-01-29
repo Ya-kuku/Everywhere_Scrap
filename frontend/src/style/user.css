@@ -1,0 +1,110 @@
+.login-head {
+    margin: 7rem 0 auto auto;
+}
+
+.login-title {
+    text-align: left;
+    float:center;
+    color:#F5dF4D;
+    font-size: 4rem;
+}
+
+.login-description {
+    margin:0.5rem 0;
+    color:#939597;
+}
+
+.login-body {
+    margin: 5rem auto;
+}
+
+.login-btn {
+    margin-top: 3rem;
+    /* text-align: center; */
+}
+
+.login-signup {
+    width:5.5rem;
+    padding:0.2rem 0;
+    text-align: center;
+    margin:1rem 0;
+    border:0;
+    border-radius: 10px;
+    background-color:#f8ea8c;
+}
+
+.login-a {
+    color:#939597;
+}
+
+
+/* Profile */
+.pf-header {
+    display: flex;
+    min-width: 100%;
+    height: 20rem;
+    justify-content: space-between;
+}
+
+.pf-titles {
+    display: flex;
+    min-width: 40rem;
+    font-size:1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 7px;
+    border-bottom: 5px solid #f8ea8c;
+    justify-content: space-between;
+}
+
+.pf-title {
+    display: flex;
+    align-items: center;
+}
+
+.pf-nickname {
+    text-align: left;
+    float:left;
+    color:#F5dF4D;
+    font-size: 4rem;
+    margin-right:1rem;
+}
+
+.pf-btns {
+    align-self: center;
+}
+
+.pf-btn {
+    background-color:#f8ea8c;
+    width:5rem;
+}
+
+.pf-btn:hover {
+    background-color: #F5dF4D;
+}
+
+.pf-description {
+    margin:1rem;
+    font-size: 1.3rem;
+}
+
+.badge {
+    background-color: #939597;
+    color:#f8ea8c;
+    font-weight: lighter;
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+
+.pf-wc {
+    float:right;
+    text-align: right;
+    align-self: center;
+}
+
+.pf-img {
+    width:20rem;
+}
+
+.pf-body {
+    margin-top:10rem;
+}
