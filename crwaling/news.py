@@ -15,8 +15,10 @@ driver.find_element_by_xpath("//*[@id='main_content']/div/div[2]/div[2]/div/a").
 # 헤드라인
 titles = driver.find_elements_by_css_selector('.cluster_head_inner > div > h2 > a > span')
 for i in range(0, len(titles),2 ):
-    print(i//2+1, titles[i].text.rstrip()+', '+titles[i+1].text.strip())
-
+    try:
+        print(i//2+1, titles[i].text.rstrip()+', '+titles[i+1].text.strip())
+    except:
+        pass
 for j in range(1,3):
     driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
     time.sleep(2)
@@ -26,13 +28,14 @@ for j in range(1,3):
     # 메인뉴스
     main = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2)')
     main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
-    # print(main_url[1])
+    print(len(main_url))
     for k in range(len(main)):
         print(main[k].text)
-        # driver.find_element_by_xpath("//*[@id='section_body']/ul[1]/li[1]/dl/dt[2]/a").click()
-        # driver.get("main_url[k]")
-        # article = driver.find_elements_by_css_selector('#articleBodyContents > span')
-        # print(len(article))
-        # print(article.text)
+        print(main_url[k],'ASDAsd')
+        driver.find_element_by_xpath("//*[@id='section_body']/ul[1]/li[1]/dl/dt[2]/a").click()
+        driver_main.get("https://main_url[k]")
+        article = driver_main.find_elements_by_css_selector('#articleBodyContents > span')
+        print(len(article))
+        print(article.text)
 
         # //*[@id="section_body"]/ul[1]/li[1]/dl/dt[2]/a
