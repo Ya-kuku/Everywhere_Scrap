@@ -1,18 +1,19 @@
 package com.example.backend.security;
 
+import java.util.Date;
+
 import io.jsonwebtoken.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.util.Date;
 
 import com.example.backend.model.user.User;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtTokenProvider {
-    private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+    // private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     @Value("${jwt.secretkey}")
     private String jwtSecretKey; 
