@@ -77,7 +77,11 @@
 			</exclusions>
 		</dependency>
 
-
+		<!-- Password 암호화 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		
 		<!-- 유효성 검사 spring boot 2.3 이상 버전에서는 추가해줘야 됨 -->
 		<dependency>

@@ -1,0 +1,12 @@
+.nav-link {
+    border:0;
+    border-radius: 10px;
+    background-color:#F5dF4D;
+    margin:auto 0.5rem;
+    width: 5.5rem;
+    text-align: center;
+}
+
+.nav-link:hover {
+    background-color:#f8ea8c;
+}

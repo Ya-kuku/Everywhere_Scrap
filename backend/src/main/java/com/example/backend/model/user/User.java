@@ -1,12 +1,10 @@
 package com.example.backend.model.user;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
 import org.springframework.data.annotation.Id;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Data;
 
 @Data
 @Document(collection = "account")
@@ -16,11 +14,11 @@ public class User {
     private String uid;
 
     private String email;
+    
     private String password;
 
     private String nickname;
-    private String phone;
 
-    private LocalDateTime createDate;
+    private String phone;
 
 }
