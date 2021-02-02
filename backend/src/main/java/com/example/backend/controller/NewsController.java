@@ -46,9 +46,10 @@ public class NewsController {
 
     @GetMapping("/news/economy")
     @ApiOperation(value="경제 기사 조회")
-    public Object getEconomy(@RequestParam(required=true) final String date) {
+    public Object getEconomy() {
 
-        Economy economy = economyRepository.findByDate(date);
+        List<Economy> economy = economyRepository.findAll();
+        // Economy economy = economyRepository.findByDate(date);
         ResponseEntity<Object> response = null;
 
         final BasicResponse result = new BasicResponse();
@@ -60,11 +61,28 @@ public class NewsController {
         return response;
     }
 
+    @GetMapping("/news/economy/headline")
+    @ApiOperation(value="경제 그날의 헤드라인 조회")
+    public Object getEconomyHeadline(@RequestParam(required = true) final String date) {
+
+        // List<Economy> economy = economyRepository.findAll();
+        Economy economy = economyRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = economy;
+        result.status = true;
+        result.data = date + "경제 헤드라인이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
+
     @GetMapping("/news/itscience")
     @ApiOperation(value="it/과학 기사 조회")
-    public Object getItScience(@RequestParam(required=true) final String date) {
+    public Object getItScience() {
         
-        ItScience itscience = itScienceRepository.findByDate(date);
+        List<ItScience> itscience = itScienceRepository.findAll();
         ResponseEntity<Object> response = null;
 
         final BasicResponse result = new BasicResponse();
@@ -78,9 +96,9 @@ public class NewsController {
 
     @GetMapping("/news/society")
     @ApiOperation(value="사회 기사 조회")
-    public Object getSociety(@RequestParam(required=true) final String date) {
+    public Object getSociety() {
 
-        Society society = societyRepository.findByDate(date);
+        List<Society> society = societyRepository.findAll();
         ResponseEntity<Object> response = null;
 
         final BasicResponse result = new BasicResponse();
