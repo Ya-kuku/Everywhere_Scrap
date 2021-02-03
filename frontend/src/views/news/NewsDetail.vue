@@ -58,7 +58,7 @@ export default {
         getHead() {
             axios.get(constants.SERVER_URL + '/news/'+this.category+'/headline', { params : { date:this.dateCheck } })
             .then((res) => {
-                this.headline = res.data.object.headline
+                this.headline = res.data.object
                 console.log(this.headline)
             })
             .catch((err) => {console.log(err)})

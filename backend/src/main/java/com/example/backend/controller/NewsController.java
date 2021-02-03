@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.example.backend.model.BasicResponse;
@@ -69,8 +70,6 @@ public class NewsController {
         
         response =  new ResponseEntity<>(result, HttpStatus.OK);
         return response;
-
-
     }
 
 
@@ -79,18 +78,25 @@ public class NewsController {
     public Object getEconomy() {
 
         List<Economy> economy = economyRepository.findAll();
-        // Economy economy = economyRepository.findByDate(date);
         ResponseEntity<Object> response = null;
-        // System.out.println(economy);
+        Collections.reverse(economy);   // 내림차순 정렬
+        
+        ArrayList<Object> allEconomy = new ArrayList<>();
+        for (var i=0;i<economy.size();i++) {
+            for (var j=1;j<=economy.get(i).getMain().size();j++) {
+                allEconomy.add(economy.get(i).getMain().get(Integer.toString(j)));
+            }
+        }
 
         final BasicResponse result = new BasicResponse();
-        result.object = economy;
+        result.object = allEconomy;
         result.status = true;
         result.data = "경제 기사가 조회되었습니다.";
         
         response =  new ResponseEntity<>(result, HttpStatus.OK);
         return response;
     }
+
 
     @GetMapping("/news/economy/headline")
     @ApiOperation(value="경제 그날의 헤드라인 조회")
@@ -101,7 +107,7 @@ public class NewsController {
         ResponseEntity<Object> response = null;
 
         final BasicResponse result = new BasicResponse();
-        result.object = economy;
+        result.object = economy.getHeadline();
         result.status = true;
         result.data = date + "경제 헤드라인이 조회되었습니다.";
         
@@ -109,15 +115,24 @@ public class NewsController {
         return response;
     }
 
+
     @GetMapping("/news/itscience")
     @ApiOperation(value="it/과학 기사 조회")
     public Object getItScience() {
         
         List<ItScience> itscience = itScienceRepository.findAll();
         ResponseEntity<Object> response = null;
+        Collections.reverse(itscience);   // 내림차순 정렬
+        
+        ArrayList<Object> allItscience = new ArrayList<>();
+        for (var i=0;i<itscience.size();i++) {
+            for (var j=1;j<=itscience.get(i).getMain().size();j++) {
+                allItscience.add(itscience.get(i).getMain().get(Integer.toString(j)));
+            }
+        }
 
         final BasicResponse result = new BasicResponse();
-        result.object = itscience;
+        result.object = allItscience;
         result.status = true;
         result.data = "IT/과학 기사가 조회되었습니다.";
         
@@ -125,15 +140,41 @@ public class NewsController {
         return response;
     }
 
+    
+    @GetMapping("/news/itscience/headline")
+    @ApiOperation(value="IT/과학 그날의 헤드라인 조회")
+    public Object getItscienceHeadline(@RequestParam(required = true) final String date) {
+
+        ItScience itscience = itScienceRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = itscience.getHeadline();
+        result.status = true;
+        result.data = date + "IT/과학 헤드라인이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
+
+
     @GetMapping("/news/society")
     @ApiOperation(value="사회 기사 조회")
     public Object getSociety() {
 
         List<Society> society = societyRepository.findAll();
         ResponseEntity<Object> response = null;
+        Collections.reverse(society);   // 내림차순 정렬
+        
+        ArrayList<Object> allSociety = new ArrayList<>();
+        for (var i=0;i<society.size();i++) {
+            for (var j=1;j<=society.get(i).getMain().size();j++) {
+                allSociety.add(society.get(i).getMain().get(Integer.toString(j)));
+            }
+        }
 
         final BasicResponse result = new BasicResponse();
-        result.object = society;
+        result.object = allSociety;
         result.status = true;
         result.data = "사회 기사가 조회되었습니다.";
         
@@ -141,5 +182,21 @@ public class NewsController {
         return response;
     }
 
+
+    @GetMapping("/news/society/headline")
+    @ApiOperation(value="사회 그날의 헤드라인 조회")
+    public Object getSocietyHeadline(@RequestParam(required = true) final String date) {
+
+        Society society = societyRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = society.getHeadline();
+        result.status = true;
+        result.data = date + "사회 헤드라인이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
 
 }
