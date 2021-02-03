@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.backend.model.BasicResponse;
@@ -44,6 +45,35 @@ public class NewsController {
     ItScienceRepository itScienceRepository;
 
 
+    @GetMapping("/news/all")
+    @ApiOperation(value="기사 전체 조회")
+    public Object getAllNews(@RequestParam(required = true) final String date) {
+        
+        Economy economy = economyRepository.findByDate(date);
+        ItScience itscience = itScienceRepository.findByDate(date);
+        Society society = societyRepository.findByDate(date);
+
+        ArrayList<Object> allnews = new ArrayList<>();
+        for (var i=0;i<20;i++) {
+            allnews.add(economy.getMain().get(Integer.toString(i)));
+            allnews.add(itscience.getMain().get(Integer.toString(i)));
+            allnews.add(society.getMain().get(Integer.toString(i)));
+        }
+        
+        ResponseEntity<Object> response = null;
+        
+        final BasicResponse result = new BasicResponse();
+        result.object = allnews;
+        result.status = true;
+        result.data = "기사 전체가 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+
+
+    }
+
+
     @GetMapping("/news/economy")
     @ApiOperation(value="경제 기사 조회")
     public Object getEconomy() {
@@ -51,6 +81,7 @@ public class NewsController {
         List<Economy> economy = economyRepository.findAll();
         // Economy economy = economyRepository.findByDate(date);
         ResponseEntity<Object> response = null;
+        // System.out.println(economy);
 
         final BasicResponse result = new BasicResponse();
         result.object = economy;

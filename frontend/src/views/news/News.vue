@@ -2,11 +2,10 @@
   <div class="topmg">
     <div class="news-head"> 
       <div class="news-title">{{ date }} <i @click="reload" style="cursor:pointer;color:#F5dF4D;" class="fas fa-sync fa-xs"></i></div>
-      
     </div>
     <div class="container">
       <div>
-        <div class="headline-title">경제</div>
+        <div class="headline-title" @click="goNews(1)">경제</div>
         <div class="news-headline">
           <div v-for="h in economy_head" :key="h.id">
             <div class="headline-body">{{ h.title }}</div>
@@ -14,7 +13,7 @@
         </div>
       </div>
       <div>
-        <div class="headline-title">사회</div>
+        <div class="headline-title" @click="goNews(2)">사회</div>
         <div class="news-headline">
           <div v-for="h in economy_head" :key="h.id">
             <div class="headline-body">{{ h.title }}</div>
@@ -22,7 +21,7 @@
         </div>
       </div>
       <div>
-        <div class="headline-title">IT/과학</div>
+        <div class="headline-title" @click="goNews(3)">IT/과학</div>
         <div class="news-headline">
           <div v-for="h in economy_head" :key="h.id">
             <div class="headline-body">{{ h.title }}</div>
@@ -32,11 +31,10 @@
     </div>
     <div class="news-body container">
       <div>
-        <div v-for="h in economy" :key="h.id">
-          <div class="headline-body">{{ h.title }}</div>
+        <div v-for="news in allnews" :key="news.id">
+          <div class="headline-body">{{ news.title }}</div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -62,9 +60,10 @@ export default {
       economy_head:[],
       society_head:[],
       itscience_head:[],
-      economy: [],
-      society: [],
-      itscience: [],
+      allnews: [],
+      // economy: [],
+      // society: [],
+      // itscience: [],
     }
   },
   created() {
@@ -96,36 +95,41 @@ export default {
       .catch((err) => {console.log(err)})
     },
     getNews() {
-      axios.get(constants.SERVER_URL + '/news/economy')
+      axios.get(constants.SERVER_URL + '/news/all', { params : { date: this.dateCheck } })
       .then((res) => {
-        this.economy = res.data.object
+        console.log(res.data.object)
+        this.allnews = res.data.object
+        console.log(this.allnews)
       })
       .catch((err) => {console.log(err)})
+      // axios.get(constants.SERVER_URL + '/news/economy')
+      // .then((res) => {
+      //   this.economy = res.data.object
+      // })
+      // .catch((err) => {console.log(err)})
 
-      axios.get(constants.SERVER_URL + '/news/society')
-      .then((res) => {
-        this.society = res.data.object
-      })
-      .catch((err) => {console.log(err)})
+      // axios.get(constants.SERVER_URL + '/news/society')
+      // .then((res) => {
+      //   this.society = res.data.object
+      // })
+      // .catch((err) => {console.log(err)})
 
-      axios.get(constants.SERVER_URL + '/news/itscience')
-      .then((res) => {
-        // this.itscience = res.data.object
-        for(var i=0;i<res.data.object.length;i++){
-          let tmp = res.data.object[i].main
-          console.log(tmp)
-          for (var j = 0;j<tmp.length;j++) {
-            console.log(tmp[j])
-            this.itscience.push(tmp[j])
-          }
-          console.log(this.itscience)
-        }
-        console.log(this.itscience)
-      })
-      .catch((err) => {console.log(err)})
+      // axios.get(constants.SERVER_URL + '/news/itscience')
+      // .then((res) => {
+      //   for(var i=0;i<res.data.object.length;i++){
+      //     let tmp = res.data.object[i].main
+      //     for (var j in tmp){
+      //       this.itscience.push(tmp[j])
+      //     }
+      //   }
+      // })
+      // .catch((err) => {console.log(err)})
     },
     reload() {
       this.$router.go()
+    },
+    goNews(category) {
+      this.$router.push({name:'Newsdetail', params:{cate:category}})
     }
   }
 }

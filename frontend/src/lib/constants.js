@@ -10,6 +10,7 @@ export default {
         },
         NEWS : {
             NEWS: "News",
+            NEWSDETAIL: "Newsdetail",
         },
     }
 }
