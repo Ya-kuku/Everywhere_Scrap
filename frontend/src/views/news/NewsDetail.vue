@@ -1,7 +1,32 @@
 <template>
-  <div>
-      {{category}}
-  </div>
+  <div class="topmg">
+        <div style="display:flex;justify-content:center;">
+            <div class="detail-head"> 
+                <div class="news-title">{{ date }} <i @click="reload" style="cursor:pointer;color:#F5dF4D;" class="fas fa-sync fa-xs"></i></div>
+            </div>
+            <button @click="goNews" class="go-news">
+                <i class="fas fa-home fa-lg"></i> NEWS 홈으로
+            </button>
+        </div>
+        <div class="container">
+            <div class="detail-headline">
+                <div class="detail-title">{{category.toUpperCase()}}</div>
+                <div class="detail-title-div">
+                    <div v-for="h in headline" :key="h.id">
+                        <div class="detail-title-body">{{ h.title }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container detail-div">
+            <div class="detail-body">
+                <div class="detail-body-title">전체 NEWS</div>
+                <div v-for="news in main" :key="news.id">
+                    <div class="headline-body">{{ news.title }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -52,21 +77,23 @@ export default {
             if (day.length == 1) {
                 day = "0" + day;
             }
-            this.dateCheck = year + month + day;
+            if (time > 13) {
+                time = time - 12
+            }
+            this.dateCheck = year + month + day + time;
             this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시'
         },
         getHead() {
             axios.get(constants.SERVER_URL + '/news/'+this.category+'/headline', { params : { date:this.dateCheck } })
             .then((res) => {
                 this.headline = res.data.object
-                console.log(this.headline)
             })
             .catch((err) => {console.log(err)})
         },
         getNews() {
             axios.get(constants.SERVER_URL + '/news/' + this.category)
             .then((res) => {
-              this.main = res.data.object
+                this.main = res.data.object
             })
             .catch((err) => {console.log(err)})
 
@@ -86,6 +113,17 @@ export default {
             //   }
             // })
             // .catch((err) => {console.log(err)})
+        },
+        reload() {
+            this.$router.go()
+        },
+        goNews() {
+            const path = `/news`
+            if (this.$route.path !== path) {
+                this.$router.push({
+                name: constants.URL_TYPE.NEWS.NEWS,
+                })
+            }
         }
     }
 }

@@ -31,6 +31,7 @@
     </div>
     <div class="news-body container">
       <div>
+        <div class="detail-body-title">전체 NEWS</div>
         <div v-for="news in allnews" :key="news.id">
           <div class="headline-body">{{ news.title }}</div>
         </div>
@@ -84,7 +85,10 @@ export default {
       if (day.length == 1) {
         day = "0" + day;
       }
-      this.dateCheck = year + month + day;
+      if (time > 13) {
+        time = time - 12
+      }
+      this.dateCheck = year + month + day + time;
       this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시'
     },
     getHead() {

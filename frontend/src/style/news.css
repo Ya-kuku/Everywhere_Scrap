@@ -34,16 +34,87 @@
 }
 
 .headline-body {
-    padding: 1rem 0;
+    padding: 1.5rem 1rem;   
+    font-size: 1.4rem;
+    width:96%;
+    margin:auto;
+    border-top: 2px solid #93959731;
 }
 
 .news-body {
     margin:5rem auto;
     max-width: 68rem;
-    height:100rem;
+    min-height:100rem;
     padding: 0;
     border-radius: 1.5rem;
     border: 3px solid #F5dF4D;
     box-shadow: 2px 2px 20px #93959791
 }
 
+.detail-head {
+    position:absolute;
+}
+
+.go-news {
+    position:relative;
+    left:380px;
+    top:5px;
+    border:0;
+    border-radius: 10px;
+    background-color:#F5dF4D;
+    margin:auto 0.5rem;
+    width: 10rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+
+.detail-headline {
+    margin:5rem auto 0rem auto;
+    min-width: 100%;
+    min-height:21rem;
+    border-radius: 1.5rem;
+    border: 3px solid #F5dF4D;
+    box-shadow: 2px 2px 20px #93959791;
+    display: flex;
+}
+
+.detail-title {
+    padding:9rem 3rem;
+    background-color: #F5dF4D;
+    font-size: 1.3rem;
+}
+
+
+.detail-title-div {
+    padding:1rem 0;
+}
+
+
+.detail-title-body {
+    padding: 0.7rem 2rem;    
+    font-size: 1.1rem;
+}
+
+.detail-div {
+    display: block;
+}
+
+
+.detail-body-title {
+    text-align: center;
+    color:#F5dF4D;
+    font-size: 3rem;
+    margin:2rem auto;
+}
+
+
+.detail-body {
+    margin:5rem auto;
+    width:100%;
+    min-height:100rem;
+    padding: 0;
+    border-radius: 1.5rem;
+    border: 3px solid #F5dF4D;
+    box-shadow: 2px 2px 20px #93959791
+}
