@@ -3,10 +3,45 @@ import requests
 import time
 import datetime
 import mongo_connection
+import summary
+import re
+
 # import pandas
 
 # 해야할것들
 # 실시간 크롤링 ex) 한시간에 한번, 경제, 사회, IT과학기사별, 기사본문 크롤링, 
+def preprocessing_articles(content):
+    contents_new = []
+
+    content = content.split('\n')
+    content = list(filter(lambda s: len(s) > 3, content))
+    
+    # 글 마지막에 항상 기자의 메일 주소가 추가되어 있다. 그 이후로 나오는 글은 불필요하므로 삭제함
+    for i in range(1, len(content)):
+        if '@' in content[-i]:
+            break
+    if i == len(content)-1:
+        i = 1
+    content_prep = content[:-i]
+
+    # 너무 짧거나, 광고, copyright, 사진설명, 메일 등 불필요한 단어가 포함되어 있을 경우 불필요한 문장으로 판단하고 삭제 처리
+    content_prep = list(filter(lambda s: len(s) > 30  and \
+        '▶' not in s and \
+            '©' not in s and \
+                '▲' not in s and \
+                    '사진' not in s and \
+                        '@' not in s and \
+                            not re.findall("기자 *$", s) and \
+                                not re.findall("제공 *$", s) and \
+                                    not re.findall("기자 *= *", s) , content_prep))
+    
+    # 언론사명이 들어간 prefix 삭제
+    content_prep = list(map(lambda s: re.sub("^\[.*\]", "", s), content_prep)) #[스포츠서울]
+    content_prep = list(map(lambda s: re.sub("^\(.*\)", "", s), content_prep)) #(서울=뉴시스1)
+    
+    contents_new.append(' '.join(content_prep))
+
+    return contents_new[0]
 
 # driver = webdriver.Chrome(executable_path="C:\\Program Files\\chromedriver\\chromedriver.exe")
 # driver = webdriver.Chrome("C:\\Users\\mycom\\Desktop\\new\\chromedriver.exe")
@@ -65,7 +100,8 @@ for j in range(1,2):
     main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
 
     k = 0
-    while k < len(main_url):
+    # while k < len(main_url):
+    while k < 10:
         main_content = dict()   
         url = main_url[k].get_attribute('href')
         
@@ -79,18 +115,7 @@ for j in range(1,2):
         main_content['url'] = url
         # f.write("news URL : [" + url +"]\n")
         driver.get(url)
-        if driver.find_element_by_css_selector('#main_content > div.article_header > div.article_info > div > span:nth-child(2)').text:
-            now = driver.find_element_by_css_selector('#main_content > div.article_header > div.article_info > div > span:nth-child(2)')
-        else:
-            now = driver.find_element_by_css_selector('#main_content > div.article_header > div.article_info > div > span')
-            #main_content > div.article_header > div.article_info > div > span
-        if now.text[-5] == ' ':
-            print(now.text[-4]+now.text[-2:])
-            time_now = now.text[-4]+now.text[-2:]
-        else:
-            print(now.text[-5]+now.text[-4]+now.text[-2:])
-            time_now = now.text[-5]+now.text[-4]+now.text[-2:]
-        main_content['time'] = time_now
+
         time.sleep(5)
         driver.implicitly_wait(60)
         
@@ -99,6 +124,20 @@ for j in range(1,2):
         # print(article.text)
         main_content['description'] = article.text
         mainList[str(num)] = main_content
+
+        change_text = preprocessing_articles(article.text)
+        textrank = summary.TextRank(change_text)
+
+        tmp = []
+        for row in textrank.summarize(4):
+            print(row)
+            print()
+            tmp.append(row)
+        main_content['summary'] = tmp
+        print('keywords :',textrank.keywords())
+        main_content['keyword'] = textrank.keywords()
+
+
         # f.write("본문 : [" + article.text + "]\n")
         driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
         main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
