@@ -4,6 +4,8 @@ from konlpy.tag import Twitter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import normalize
+from wordcloud import WordCloud
+import stylecloud
 import numpy as np
 
 
@@ -86,7 +88,7 @@ class TextRank(object):
         else:
             self.sentences = self.sent_tokenize.text2sentences(text)
         self.nouns = self.sent_tokenize.get_nouns(self.sentences)
-        print('85',self.sentences)
+        # print('85',self.sentences)
         print('90',self.nouns)
 
         self.graph_matrix = GraphMatrix()
@@ -98,6 +100,14 @@ class TextRank(object):
         self.sorted_sent_rank_idx = sorted(self.sent_rank_idx, key=lambda k: self.sent_rank_idx[k], reverse=True)
         self.word_rank_idx = self.rank.get_ranks(self.words_graph)
         self.sorted_word_rank_idx = sorted(self.word_rank_idx, key=lambda k: self.word_rank_idx[k], reverse=True)
+
+    def makewordcloud(self):
+        cloud = ''
+        print(len(self.nouns))
+        for i in self.nouns:
+            cloud += i
+        print(cloud)
+        return cloud
 
     def summarize(self, sent_num=4):
         summary = []
@@ -127,6 +137,24 @@ class TextRank(object):
             keywords.append(self.idx2word[idx])
         return keywords
 
+def make(text,idx):
+    # wc = WordCloud(font_path='C://windows\\Fonts\\HANYGO230.ttf', \
+    #                 # background_color="white",\
+    #                 width=1000,\
+    #                 height=1000,\
+    #                 max_words=100,\
+    #                 max_font_size=300)
+
+    # wc.generate(text)
+    # wc.to_file(text[1]+'.png')
+    wc = stylecloud.gen_stylecloud(text=text,
+                                    icon_name="fab fa-twitter",
+                                    font_path='C://windows\\Fonts\\HANYGO230.ttf',
+                                    colors=['#032859','#016F94','#FFE4B6','#FFB06D','#FE6A2C','#FCBB6D','#D8737F','#AB6C8C','#685D79','#475C7A'],
+                                    palette="colorbrewer.diverging.Spectral_11",
+                                    background_color='#EFEFF0',
+                                    # gradient="horizontal",
+                                    output_name="./img/economy/"+str(idx)+".png")
 
 # 출처: https://excelsior-cjh.tistory.com/93 [EXCELSIOR]
 # url = 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=293&aid=0000033262'
