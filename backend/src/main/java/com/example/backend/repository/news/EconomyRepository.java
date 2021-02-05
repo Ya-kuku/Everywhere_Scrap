@@ -12,4 +12,6 @@ public interface EconomyRepository extends MongoRepository<Economy, String> {
     Economy findByDate(String date);
 
     List<Economy> findAll();
+
+    // Economy findByUrl(String url);
 }

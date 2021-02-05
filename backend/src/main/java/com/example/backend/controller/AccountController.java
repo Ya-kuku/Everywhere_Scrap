@@ -1,14 +1,21 @@
 package com.example.backend.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.example.backend.model.BasicResponse;
+import com.example.backend.model.news.Economy;
 import com.example.backend.model.user.SignupRequest;
 import com.example.backend.model.user.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.news.EconomyRepository;
+import com.example.backend.repository.news.ItScienceRepository;
+import com.example.backend.repository.news.SocietyRepository;
 import com.example.backend.security.JwtTokenProvider;
 import com.example.backend.security.PasswordEncoding;
 import com.example.backend.security.JwtAuthentication;
@@ -45,6 +52,14 @@ public class AccountController {
         @Autowired
         UserRepository userRepository;
 
+        @Autowired
+        EconomyRepository economyRepository;
+
+        @Autowired
+        SocietyRepository societyRepository;
+
+        @Autowired
+        ItScienceRepository itScienceRepository;
         
         @Autowired
         JwtTokenProvider tokenProvider;
@@ -128,12 +143,13 @@ public class AccountController {
 
                                 String newPassword = passwordEncoding.encode(request.getPassword());
 
-
+                                List<Map<String,Object>> likenews = new ArrayList<Map<String,Object>>();
                                 final User user = new User();
                                 user.setEmail(request.getEmail());
                                 user.setPassword(newPassword);
                                 user.setNickname(request.getNickname());
                                 user.setPhone(request.getPhone());
+                                user.setLikenews(likenews);
                                 
                                 userRepository.save(user);
                                 
@@ -183,5 +199,69 @@ public class AccountController {
                 
                 return response;
         }
+
+
+        @GetMapping("/account/likenews")
+        @ApiOperation(value = "찜하기")
+        public Object likeNews(@RequestParam(required=true) final String Token,
+                        @RequestParam(required=true) final String url){
+
+                ResponseEntity<Object> response = null;
+                String userId = tokenProvider.getUser(Token);
+                User user = userRepository.findByUid(userId);
+                
+                List<Economy> economy = economyRepository.findAll();
+                for (var i=0;i<economy.size();i++) {
+                        for (var j=1;j<=economy.get(i).getMain().size();j++) {
+                                if (economy.get(i).getMain().get(Integer.toString(j)).toString().contains(url)) {
+                                        // allEconomy.put(Integer.toString((int)(Math.random()*10000)), economy.get(i).getMain().get(Integer.toString(j)));
+                                        user.getLikenews().get(0).put(Integer.toString((int)(Math.random()*10000)), economy.get(i).getMain().get(Integer.toString(j)));
+                                }
+                        }
+                }
+                this.userRepository.save(user);
+
+                final BasicResponse result = new BasicResponse();
+                result.status = true;
+                result.data = "회원 정보 조회 성공";
+                result.object = user;
+                
+                response =  new ResponseEntity<>(result, HttpStatus.OK);
+                return response;
+        }
+
+        @GetMapping("/account/likenews/delete")
+        @ApiOperation(value = "찜한 것 삭제")
+        public Object likeNewsDelete(@RequestParam(required=true) final String Token,
+                        @RequestParam(required=true) final String url){
+
+                ResponseEntity<Object> response = null;
+                // String userId = tokenProvider.getUser(Token);
+                // User user = userRepository.findByUid(userId);
+                
+                // List<Economy> economy = economyRepository.findAll();
+                // for (var i=0;i<economy.size();i++) {
+                //         for (var j=1;j<=economy.get(i).getMain().size();j++) {
+                //                 if (economy.get(i).getMain().get(Integer.toString(j)).toString().contains(url)) {
+                //                         // allEconomy.put(Integer.toString((int)(Math.random()*10000)), economy.get(i).getMain().get(Integer.toString(j)));
+                //                         user.getLikenews().get(0).put(Integer.toString((int)(Math.random()*10000)), economy.get(i).getMain().get(Integer.toString(j)));
+                //                 }
+                //         }
+                // }
+                // this.userRepository.save(user);
+
+                final BasicResponse result = new BasicResponse();
+                result.status = true;
+                result.data = "회원 정보 조회 성공";
+                // result.object = user;
+                
+                response =  new ResponseEntity<>(result, HttpStatus.OK);
+                return response;
+        }
+
+
+
+
+
 
 }
