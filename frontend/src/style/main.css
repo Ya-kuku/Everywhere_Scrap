@@ -11,6 +11,8 @@
     display:flex;
     justify-content: space-around;
 }
+
+
 .main-btns {
     position: relative;
     top:60rem;

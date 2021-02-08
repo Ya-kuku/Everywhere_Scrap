@@ -7,6 +7,7 @@ import Login from '../views/user/Login.vue'
 import Signup from '../views/user/Signup.vue'
 import Profile from '../views/user/Profile.vue'
 import News from '../views/news/News.vue'
+import Newsdetail from '../views/news/NewsDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,12 @@ const routes = [
     path: '/news',
     name: constants.URL_TYPE.NEWS.NEWS,
     component: News,
+    props: true,
+  },
+  {
+    path: '/news/:cate',
+    name: constants.URL_TYPE.NEWS.NEWSDETAIL,
+    component: Newsdetail,
     props: true,
   },
 ]

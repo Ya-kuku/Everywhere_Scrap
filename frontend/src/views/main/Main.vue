@@ -28,7 +28,7 @@ export default {
     methods: {
         goNews(cate) {
             this.$router.push({
-                name: constants.URL_TYPE.NEWS.NEWS,
+                name: constants.URL_TYPE.NEWS.NEWSDETAIL,
                 params: {cate:cate},
             })
         }
