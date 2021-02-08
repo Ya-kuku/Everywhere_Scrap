@@ -2,7 +2,6 @@ package com.example.backend.model.user;
 
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.annotation.Id;
@@ -24,6 +23,6 @@ public class User {
 
     private String phone;
 
-    private List<Map<String,Object>> likenews;
+    private Map<String, Map<String,Object>> likenews;
 
 }
