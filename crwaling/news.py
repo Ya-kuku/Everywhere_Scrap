@@ -59,6 +59,8 @@ filename = 'news_' + dt.strftime("%Y_%m_%d_%H_%M")
 # 당일 날짜 시간
 # f.write(dt.strftime("%Y%m%d%H")+"\n")
 date = dt.strftime("%Y%m%d%H")
+png_name1 = dt.strftime("%m%d")
+png_name2 = dt.strftime("%H")
 
 # 헤드라인
 titles = driver.find_elements_by_css_selector('.cluster_head_inner > div > h2 > a > span')
@@ -100,8 +102,8 @@ for j in range(1,11):
     main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
 
     k = 0
-    # while k < len(main_url):
     while k < len(main_url):
+    # while k < 3:
         main_content = dict()   
         url = main_url[k].get_attribute('href')
         
@@ -128,7 +130,7 @@ for j in range(1,11):
         textrank = summary.TextRank(change_text)
 
         word_cloud = textrank.makewordcloud()
-        summary.make(word_cloud,num)
+        summary.make(word_cloud, num, png_name1, png_name2)
 
         tmp = []
         for row in textrank.summarize(4):
@@ -138,7 +140,7 @@ for j in range(1,11):
         main_content['summary'] = tmp
         print('keywords :',textrank.keywords())
         main_content['keyword'] = textrank.keywords()
-        main_content['locate'] = './img/society/'+str(num)+'.png'
+        main_content['locate'] = './img/society/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
         mainList[str(num)] = main_content
 
         # f.write("본문 : [" + article.text + "]\n")

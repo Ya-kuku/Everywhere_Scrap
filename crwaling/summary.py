@@ -7,6 +7,7 @@ from sklearn.preprocessing import normalize
 from wordcloud import WordCloud
 import stylecloud
 import numpy as np
+import os
 
 
 class SentenceTokenizer(object):
@@ -137,7 +138,7 @@ class TextRank(object):
             keywords.append(self.idx2word[idx])
         return keywords
 
-def make(text,idx):
+def make(text,idx, png_name1, png_name2):
     # wc = WordCloud(font_path='C://windows\\Fonts\\HANYGO230.ttf', \
     #                 # background_color="white",\
     #                 width=1000,\
@@ -147,6 +148,18 @@ def make(text,idx):
 
     # wc.generate(text)
     # wc.to_file(text[1]+'.png')
+    try:
+        if not os.path.exists("./img/society/"+str(png_name1)):
+            os.makedirs("./img/society/"+str(png_name1))
+    except:
+        pass
+    
+    try:
+        if not os.path.exists("./img/society/"+str(png_name1)+"/"+str(png_name2)):
+            os.makedirs("./img/society/"+str(png_name1)+"/"+str(png_name2))
+    except:
+        pass
+
     wc = stylecloud.gen_stylecloud(text=text,
                                     icon_name="fab fa-twitter",
                                     font_path='C://windows\\Fonts\\HANYGO230.ttf',
@@ -154,11 +167,10 @@ def make(text,idx):
                                     palette="colorbrewer.diverging.Spectral_11",
                                     background_color='#EFEFF0',
                                     # gradient="horizontal",
-                                    output_name="./img/society/"+str(idx)+".png")
+                                    output_name="./img/society/"+str(png_name1)+"/"+str(png_name2)+"/"+str(idx)+".png")
 
 # 출처: https://excelsior-cjh.tistory.com/93 [EXCELSIOR]
 # url = 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=293&aid=0000033262'
-# url = '2020년 3월 만들어진 클럽하우스는 미국 실리콘밸리 유명 투자자 안드레센 호로위츠의 ‘a16z’로부터 투자를 받았고, 출시 초기 스타트업 창업자들과 벤처 투자자들 사이에서 회자되며 사용자가 늘었다. 내가 원하는 주제나 이야기를 하는 방에 들어가 모르는 사람과 소통할 수 있다는 게 매력으로 거론된다. 특히 유명인사들과 쉽게 만나 소통할 수 있어 초기부터 불이 지펴진 모습이다. 지난해 말 기준 전세계 사용자는 600만명 수준. 회사는 현재 기업가치 1조원 이상의 ‘유니콘’으로 평가받고 있다. 물론 클럽하우스 사용자 규모는 페이스북·인스타그램·트위터에 비할 바가 아니다. 앱도 아직 아이폰에서만 사용 가능하고 안드로이드 기반의 스마트폰에서는 사용할 수 없다는 문제도 있다. 하지만 음성과 초대 기반이라는 확실한 차별점이 있고 유명인사들이 지속 유입되고 있어 클럽하우스의 열풍이 어디까지 이어질지 주목된다. 코로나19 시대에 보다 많은 소통을 하고 싶어하는 사람들에게 클럽하우스가 또 하나의 SNS로 자리 잡을지 관심이 쏠린다.'
 
 # textrank = TextRank(url)
 # for row in textrank.summarize(4):
