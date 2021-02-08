@@ -90,7 +90,7 @@ for i in range(0, len(titles),2 ):
 
 mainList = dict()
 num = 0
-for j in range(1,2):
+for j in range(1,11):
     driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
     time.sleep(2)
     driver.implicitly_wait(60)
@@ -101,7 +101,7 @@ for j in range(1,2):
 
     k = 0
     # while k < len(main_url):
-    while k < 1:
+    while k < len(main_url):
         main_content = dict()   
         url = main_url[k].get_attribute('href')
         
@@ -121,7 +121,7 @@ for j in range(1,2):
         
         # 메인 뉴스 본문
         article = driver.find_element_by_css_selector('#articleBodyContents')
-        # print(article.text)
+        print(article.text)
         main_content['description'] = article.text
 
         change_text = preprocessing_articles(article.text)
@@ -132,13 +132,13 @@ for j in range(1,2):
 
         tmp = []
         for row in textrank.summarize(4):
-            print(row)
-            print()
+            # print(row)
+            # print()
             tmp.append(row)
         main_content['summary'] = tmp
         print('keywords :',textrank.keywords())
         main_content['keyword'] = textrank.keywords()
-        main_content['locate'] = './img/economy/'+str(num)+'.png'
+        main_content['locate'] = './img/society/'+str(num)+'.png'
         mainList[str(num)] = main_content
 
         # f.write("본문 : [" + article.text + "]\n")
