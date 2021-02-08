@@ -154,7 +154,7 @@ def make(text,idx):
                                     palette="colorbrewer.diverging.Spectral_11",
                                     background_color='#EFEFF0',
                                     # gradient="horizontal",
-                                    output_name="./img/economy/"+str(idx)+".png")
+                                    output_name="./img/society/"+str(idx)+".png")
 
 # 출처: https://excelsior-cjh.tistory.com/93 [EXCELSIOR]
 # url = 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=293&aid=0000033262'
