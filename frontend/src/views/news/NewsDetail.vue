@@ -77,10 +77,26 @@ export default {
             if (day.length == 1) {
                 day = "0" + day;
             }
-            if (time > 13) {
-                time = time - 12
+            let time_check = today.getHours();
+            if (time_check > 7 && time_check < 11){
+                time_check = 8
             }
-            this.dateCheck = year + month + day + time;
+            else if (time_check > 10 && time_check < 14) {
+            time_check = 11
+            }
+            else if (time_check > 13 && time_check < 17) {
+            time_check = 14
+            }
+            else if (time_check > 16 && time_check < 20) {
+            time_check = 17
+            }
+            else {
+            time_check = 17
+}
+            // if (time > 13) {
+            //     time = time - 12
+            // }
+            this.dateCheck = year + month + day + time_check;
             this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시'
         },
         getHead() {

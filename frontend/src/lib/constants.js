@@ -11,6 +11,7 @@ export default {
         NEWS : {
             NEWS: "News",
             NEWSDETAIL: "Newsdetail",
+            NEWSCONTENTS: "Newscontents"
         },
     }
 }
