@@ -199,4 +199,60 @@ public class NewsController {
         return response;
     }
 
+    // date
+    @GetMapping("/news/economy/contents")
+    @ApiOperation(value = "경제 뉴스 기사 보기")
+    public Object getEconomyContent(@RequestParam(required = true) final String date, 
+                                 @RequestParam(required = true) final String index ) {
+
+        Economy economy = economyRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = economy.getMain().get(index);
+        result.status = true;
+        result.data = date + "경제 본문이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/news/society/contents")
+    @ApiOperation(value="사회 뉴스 기사 보기")
+    public Object getSocietyContent(@RequestParam(required = true) final String date,
+                                    @RequestParam(required = true) final String index ) {
+
+        Society society = societyRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = society.getMain().get(index);
+        result.status = true;
+        result.data = date + "사회 본문이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/news/itscience/contents")
+    @ApiOperation(value="IT/과학 뉴스 기사 보기")
+    public Object getItscienceContent(@RequestParam(required = true) final String date,
+                                      @RequestParam(required = true) final String index) {
+
+        ItScience itscience = itScienceRepository.findByDate(date);
+        ResponseEntity<Object> response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.object = itscience.getMain().get(index);
+        result.status = true;
+        result.data = date + "IT/과학 본문이 조회되었습니다.";
+        
+        response =  new ResponseEntity<>(result, HttpStatus.OK);
+        return response;
+    }
+
+    
+
+                                 
+
 }
