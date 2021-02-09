@@ -33,7 +33,7 @@
       <div>
         <div class="detail-body-title">전체 NEWS</div>
         <div v-for="news in allnews" :key="news.id">
-          <div class="headline-body">{{ news.title }}</div>
+          <div @click="goContent(news.locate)" class="headline-body">{{ news.title }}</div>
         </div>
       </div>
     </div>
@@ -62,6 +62,7 @@ export default {
       society_head:[],
       itscience_head:[],
       allnews: [],
+      locate:'',
       // economy: [],
       // society: [],
       // itscience: [],
@@ -85,11 +86,27 @@ export default {
       if (day.length == 1) {
         day = "0" + day;
       }
-      if (time > 13) {
-        time = time - 12
+      let time_check = today.getHours();
+      if (time_check > 7 && time_check < 11){
+          time_check = 8
       }
-      this.dateCheck = year + month + day + time;
-      this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시'
+      else if (time_check > 10 && time_check < 14) {
+        time_check = 11
+      }
+      else if (time_check > 13 && time_check < 17) {
+        time_check = 14
+      }
+      else if (time_check > 16 && time_check < 20) {
+        time_check = 17
+      }
+      else {
+        time_check = 17
+      }
+      // if (time > 13) {
+      //   time = time - 12
+      // }
+      this.dateCheck = year + month + day + time_check;
+      this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시';
     },
     getHead() {
       axios.get(constants.SERVER_URL + '/news/economy/headline', { params : { date:this.dateCheck } })
@@ -134,7 +151,11 @@ export default {
     },
     goNews(category) {
       this.$router.push({name:'Newsdetail', params:{cate:category}})
-    }
+    },
+    goContent(locate) {
+      let path = locate.slice(6,-4)
+      this.$router.push({name:'Newscontents', params:{locate:path}})
+    },
   }
 }
 </script>

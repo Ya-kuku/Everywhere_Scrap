@@ -8,6 +8,7 @@ import Signup from '../views/user/Signup.vue'
 import Profile from '../views/user/Profile.vue'
 import News from '../views/news/News.vue'
 import Newsdetail from '../views/news/NewsDetail.vue'
+import Newscontents from '../views/news/NewsContents.vue'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,12 @@ const routes = [
     component: Newsdetail,
     props: true,
   },
+  {
+    path: '/news/:locate',
+    name: constants.URL_TYPE.NEWS.NEWSCONTENTS,
+    component: Newscontents,
+    props: true,
+  }
 ]
 
 const router = new VueRouter({
