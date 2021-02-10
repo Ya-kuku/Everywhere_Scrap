@@ -5,26 +5,34 @@
                 <div class="news-title">{{ date }} <i @click="reload" style="cursor:pointer;color:#F5dF4D;" class="fas fa-sync fa-xs"></i></div>
             </div>
             <button @click="goNews" class="go-news">
-                <i class="fas fa-home fa-lg"></i> NEWS 홈으로
+                <i class="fas fa-home fa-lg"></i> 전체 NEWS
             </button>
         </div>
         <div class="container">
-            <div class="detail-headline">
-                <div class="detail-title">{{category.toUpperCase()}}</div>
-                <div class="detail-title-div">
-                    <div v-for="h in headline" :key="h.id">
-                        <div class="detail-title-body">{{ h.title }}</div>
-                    </div>
+            <div class="news-detail-headline">
+                <div class="news-detail-title">{{category.toUpperCase()}}</div>
+                <div v-for="h in headline" :key="h.id">
+                    <a target="_blank" :href="h.url"><div class="detail-headline-body">{{ h.title }}</div></a>
                 </div>
             </div>
         </div>
-        <div class="container detail-div">
+        <div class="container">
             <div class="detail-body">
-                <div class="detail-body-title">전체 NEWS</div>
-                <div v-for="news in main" :key="news.id">
-                    <div class="headline-body">{{ news.title }}</div>
+                <div class="news-body-title">전체 NEWS</div>
+                <div v-for="m in pageOfMain" :key="m.id">
+                    <div @click="goContent(m.locate)" class="headline-body">{{ m.title }}</div>
                 </div>
             </div>
+        </div>
+        <div class="container">
+            <jw-pagination
+                class="news-pagination"
+                :styles="customStyles"
+                :labels="customLabels"
+                :items="main"
+                @changePage="onChangePage"
+                :pageSize="20"
+            ></jw-pagination>
         </div>
     </div>
 </template>
@@ -35,21 +43,41 @@ import '../../style/news.css'
 import axios from 'axios'
 import constants from '../../lib/constants'
 
+const customStyles = {
+    ul: {
+        margin:'1rem auto 5rem auto',
+    },
+    li: {
+        display: "inline-block",
+    },
+    a: {
+        borderRadius: "50%",
+        width:"3.7rem",
+        padding:"1rem",
+        margin:"0.2rem",
+        fontSize:"1.3rem"
+    },
+};
+const customLabels = {
+  first: "<<",
+  last: ">>",
+  previous: "<",
+  next: ">",
+};
 export default {
     name:"Newsdetail",
-    props: {
-        cate: {
-            type: Number,
-            default:0,
-        }
-    },
     data() {
         return {
             dateCheck:'',
             date:'',
             headline:[],
             main: [],
-            category:''
+            pageOfMain: [],
+            category:'',
+            cate: this.$route.path.slice(-1),
+
+            customStyles,
+            customLabels,
         }
     },
     created() {
@@ -82,20 +110,17 @@ export default {
                 time_check = 8
             }
             else if (time_check > 10 && time_check < 14) {
-            time_check = 11
+                time_check = 11
             }
             else if (time_check > 13 && time_check < 17) {
-            time_check = 14
+                time_check = 14
             }
             else if (time_check > 16 && time_check < 20) {
-            time_check = 17
+                time_check = 17
             }
             else {
-            time_check = 17
-}
-            // if (time > 13) {
-            //     time = time - 12
-            // }
+                time_check = 17
+            }
             this.dateCheck = year + month + day + time_check;
             this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시'
         },
@@ -112,23 +137,9 @@ export default {
                 this.main = res.data.object
             })
             .catch((err) => {console.log(err)})
-
-            // axios.get(constants.SERVER_URL + '/news/society')
-            // .then((res) => {
-            //   this.society = res.data.object
-            // })
-            // .catch((err) => {console.log(err)})
-
-            // axios.get(constants.SERVER_URL + '/news/itscience')
-            // .then((res) => {
-            //   for(var i=0;i<res.data.object.length;i++){
-            //     let tmp = res.data.object[i].main
-            //     for (var j in tmp){
-            //       this.itscience.push(tmp[j])
-            //     }
-            //   }
-            // })
-            // .catch((err) => {console.log(err)})
+        },
+        onChangePage(pageOfMain) {
+            this.pageOfMain = pageOfMain;
         },
         reload() {
             this.$router.go()
@@ -136,11 +147,13 @@ export default {
         goNews() {
             const path = `/news`
             if (this.$route.path !== path) {
-                this.$router.push({
-                name: constants.URL_TYPE.NEWS.NEWS,
-                })
+                this.$router.push({ name: constants.URL_TYPE.NEWS.NEWS })
             }
-        }
+        },
+        goContent(locate) {
+            let path = locate.slice(6,-4).split('/')
+            this.$router.push({name:'Newscontents', params:{cate:path[0], day:path[1], time:path[2], num:path[3]}})
+        },
     }
 }
 </script>

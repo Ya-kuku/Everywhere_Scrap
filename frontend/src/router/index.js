@@ -46,7 +46,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/news/:locate',
+    path: '/news/:cate/:day/:time/:num',
     name: constants.URL_TYPE.NEWS.NEWSCONTENTS,
     component: Newscontents,
     props: true,

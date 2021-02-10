@@ -65,7 +65,7 @@ export default {
         axios
         .get(constants.SERVER_URL + '/account/profile', { params: { Token: token } })
         .then((res)=> {
-          this.profileData = res.data.object;
+          this.profileData = res.data.object[0];
           console.log(res.data.object)
         })
       },
