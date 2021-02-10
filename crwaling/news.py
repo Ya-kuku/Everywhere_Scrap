@@ -58,11 +58,9 @@ filename = 'news_' + dt.strftime("%Y_%m_%d_%H_%M")
 
 # 당일 날짜 시간
 # f.write(dt.strftime("%Y%m%d%H")+"\n")
-# date = dt.strftime("%Y%m%d%H")
-date = "2021020917"
+date = dt.strftime("%Y%m%d%H")
 png_name1 = dt.strftime("%m%d")
-# png_name2 = dt.strftime("%H")
-png_name2 = '17'
+png_name2 = dt.strftime("%H")
 
 # 헤드라인
 titles = driver.find_elements_by_css_selector('.cluster_head_inner > div > h2 > a > span')
@@ -94,7 +92,7 @@ for i in range(0, len(titles),2 ):
 
 mainList = dict()
 num = 0
-for j in range(1,7):
+for j in range(1,2):
     driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
     time.sleep(2)
     driver.implicitly_wait(60)
@@ -104,8 +102,8 @@ for j in range(1,7):
     main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
 
     k = 0
-    while k < len(main_url):
-    # while k < 3:
+    # while k < len(main_url):
+    while k < 3:
         main_content = dict()   
         url = main_url[k].get_attribute('href')
         

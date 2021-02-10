@@ -149,14 +149,14 @@ def make(text,idx, png_name1, png_name2):
     # wc.generate(text)
     # wc.to_file(text[1]+'.png')
     try:
-        if not os.path.exists("./img/society/"+str(png_name1)):
-            os.makedirs("./img/society/"+str(png_name1))
+        if not os.path.exists("../frontend/src/assets/img/society/"+str(png_name1)):
+            os.makedirs("../frontend/src/assets/img/society/"+str(png_name1))
     except:
         pass
     
     try:
-        if not os.path.exists("./img/society/"+str(png_name1)+"/"+str(png_name2)):
-            os.makedirs("./img/society/"+str(png_name1)+"/"+str(png_name2))
+        if not os.path.exists("../frontend/src/assets/img/society/"+str(png_name1)+"/"+str(png_name2)):
+            os.makedirs("../frontend/src/assets/img/society/"+str(png_name1)+"/"+str(png_name2))
     except:
         pass
 
@@ -167,7 +167,7 @@ def make(text,idx, png_name1, png_name2):
                                     palette="colorbrewer.diverging.Spectral_11",
                                     background_color='#EFEFF0',
                                     # gradient="horizontal",
-                                    output_name="./img/society/"+str(png_name1)+"/"+str(png_name2)+"/"+str(idx)+".png")
+                                    output_name="../frontend/src/assets/img/society/"+str(png_name1)+"/"+str(png_name2)+"/"+str(idx)+".png")
 
 # 출처: https://excelsior-cjh.tistory.com/93 [EXCELSIOR]
 # url = 'https://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=105&oid=293&aid=0000033262'
