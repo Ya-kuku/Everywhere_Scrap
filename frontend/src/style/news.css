@@ -1,12 +1,12 @@
+/* News.vue */
 .news-title {
     float:center;
     text-align: center;
     color:#939597;
     font-size: 2rem;
-    padding-bottom:1rem;
     width: 24rem;
     margin: auto;
-    /* background-color: #f8ea8c; */
+    padding-bottom:1rem;
     border-radius: 7px;
     border-bottom: 5px solid #f8ea8c;
 }
@@ -24,8 +24,9 @@
 }
 
 .news-headline {
+    position: relative;
     padding: 1rem;
-    width: 22rem;
+    width: 100%;
     min-height: 21rem;
     border-radius: 1.5rem;
     border: 3px solid #F5dF4D;
@@ -33,88 +34,162 @@
     /* background-color: #f8ea8c; */
 }
 
+.go-news-btn {
+    position: absolute;
+    top:1.2rem;
+    right: 0.8rem;
+    width: 6.5rem;
+    height: 3.5rem;
+}
+
 .headline-body {
-    padding: 1.5rem 1rem;   
+    padding: 1.2rem 1rem;   
     font-size: 1.4rem;
-    width:96%;
     margin:auto;
-    border-top: 2px solid #93959731;
+    cursor: pointer;
+    border-radius: 1.5rem;
+}
+
+.headline-body:hover {
+    background-color: #93959721;
 }
 
 .news-body {
     margin:5rem auto;
-    max-width: 68rem;
+    width:100%;
     min-height:100rem;
-    padding: 0;
+    padding: 1rem;
     border-radius: 1.5rem;
     border: 3px solid #F5dF4D;
-    box-shadow: 2px 2px 20px #93959791
+    box-shadow: 2px 2px 20px #93959791;
 }
 
+.news-body-title {
+    text-align: center;
+    color:#F5dF4D;
+    font-size: 2.5rem;
+    margin:auto;
+}
+
+
+/* NewsDetail.vue */
 .detail-head {
     position:absolute;
 }
 
 .go-news {
     position:relative;
-    left:380px;
-    top:5px;
+    right:-30rem;
     border:0;
     border-radius: 10px;
     background-color:#F5dF4D;
     margin:auto 0.5rem;
-    width: 10rem;
+    width: 8.5rem;
     padding: 1rem;
     text-align: center;
 }
 
-
-.detail-headline {
+.news-detail-headline {
+    position:relative;
     margin:5rem auto 0rem auto;
+    padding:1rem;
     min-width: 100%;
-    min-height:21rem;
     border-radius: 1.5rem;
     border: 3px solid #F5dF4D;
     box-shadow: 2px 2px 20px #93959791;
-    display: flex;
 }
 
-.detail-title {
-    padding:9rem 3rem;
-    background-color: #F5dF4D;
-    font-size: 1.3rem;
-}
-
-
-.detail-title-div {
-    padding:1rem 0;
-}
-
-
-.detail-title-body {
-    padding: 0.7rem 2rem;    
-    font-size: 1.1rem;
-}
-
-.detail-div {
-    display: block;
-}
-
-
-.detail-body-title {
-    text-align: center;
+.news-detail-title {
+    position: absolute;
+    top:1rem;
+    right:1rem;
+    text-align: right;
     color:#F5dF4D;
-    font-size: 3rem;
-    margin:2rem auto;
+    font-size: 2.5rem;
+    margin:auto;
 }
 
+.detail-headline-body {
+    padding: 1rem;   
+    font-size: 1.2rem;
+    margin:auto;
+    cursor: pointer;
+    border-radius: 1.5rem;
+}
+
+.detail-headline-body:hover {
+    background-color: #93959721;
+}
 
 .detail-body {
-    margin:5rem auto;
+    margin:5rem auto 2rem auto;
     width:100%;
-    min-height:100rem;
-    padding: 0;
+    min-height:70rem;
+    padding: 1rem;
     border-radius: 1.5rem;
     border: 3px solid #F5dF4D;
     box-shadow: 2px 2px 20px #93959791
+}
+
+.page-item.first .page-link,
+.page-item.previous .page-link,
+.page-item.next .page-link,
+.page-item.last .page-link {
+    color:#939597;
+    border:3px solid #93959763;
+}
+
+.page-link {
+    color:#F5dF4D;
+    border:3px solid #F5dF4D;
+}
+
+.page-item.active .page-link {
+    background-color: #F5dF4D;
+    border:3px solid #F5dF4D;
+}
+
+
+/* NewsContents.vue */
+.content-title {
+    margin: auto;
+    text-align: center;
+    color:#939597;
+    font-size: 2rem;
+    padding-bottom:1rem;
+}
+
+.content {
+    position:relative;
+    display: flex;
+    margin:2rem auto;
+    width:100%;
+    min-height:35rem;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    border: 3px solid #F5dF4D;
+    box-shadow: 2px 2px 20px #93959791;
+}
+
+.content-keywordss {
+    display: flex;
+    justify-content: center;
+}
+
+.content-keyword {
+    margin:0.4rem;
+    padding:0.4rem 0.7rem;
+    border-radius: 30%;
+    background-color: #f8ea8c;
+}
+
+.content-summary {
+    display:flex;
+    margin:2rem auto;
+}
+
+.content-likenews {
+    position: absolute;
+    right: 1rem;
+    bottom: 1.3rem;
 }
