@@ -118,7 +118,7 @@ export default {
           }
         })
         .catch((err) => {console.log(err)})
-      } else if (tmp == 2) {
+      } else if (tmp == 3) {
         axios.get(constants.SERVER_URL + '/news/itscience/headline', { params : { date:this.dateCheck } })
         .then((res) => {
           this.head = []

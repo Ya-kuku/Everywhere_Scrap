@@ -333,6 +333,57 @@ public class AccountController {
         }
 
 
+        @GetMapping("/account/likenews/find")
+        @ApiOperation(value = "찜한 것 조회")
+        public Object likeNewsFind(@RequestParam(required=true) final String Token,
+                        @RequestParam(required=true) final String url){
+                
+                String userId = tokenProvider.getUser(Token);
+                List<User> user = userRepository.findByUid(userId);
+                
+                Boolean flag = false;
+                
+                if (user.get(0).getLikenews().get("Economy").size() != 0) {
+                        Set<String> keys1 = user.get(0).getLikenews().get("Economy").keySet();
+                        for (String key:keys1) {
+                                if (user.get(0).getLikenews().get("Economy").get(key).toString().contains(url)) {
+                                        flag = true;
+                                        break;
+                                }
+                        }
+                }
+                if (user.get(0).getLikenews().get("Society").size() != 0) {
+                        Set<String> keys3 = user.get(0).getLikenews().get("Society").keySet();
+                        for (String key:keys3) {
+                                if (user.get(0).getLikenews().get("Society").get(key).toString().contains(url)) {
+                                        flag = true;
+                                        break;
+                                }
+                        } 
+                }
+                if (user.get(0).getLikenews().get("ItScience").size() != 0) {
+                        Set<String> keys2 = user.get(0).getLikenews().get("ItScience").keySet();
+                        for (String key:keys2) {
+                                if (user.get(0).getLikenews().get("ItScience").get(key).toString().contains(url)) {
+                                        flag = true;
+                                        break;
+                                }
+                        } 
+                } 
+                
+                ResponseEntity<Object> response = null;
+
+                final BasicResponse result = new BasicResponse();
+                result.status = true;
+                result.data = "찜 조회 완료";
+                result.object = flag;
+                response =  new ResponseEntity<>(result, HttpStatus.OK);
+                return response;
+        
+        }
+
+
+
 
 
 

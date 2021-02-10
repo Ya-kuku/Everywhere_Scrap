@@ -2,7 +2,7 @@
     <div class="topmg">
         <div class="container">
             <div>
-                <a style="text-decoration:none;" :href="maincontent.url">
+                <a target="_blank" style="text-decoration:none;" :href="maincontent.url">
                     <div class="content-title">{{maincontent.title}}</div>
                 </a>
                 <div class="content-keywordss">
@@ -19,8 +19,11 @@
                             {{sum}}
                         </div>
                     </div>
-                    <button v-if="isLoggedIn" @click="likeNews(maincontent.url)" class="content-likenews">
+                    <button v-if="isLoggedIn&!flag" @click="likeNews(maincontent.url)" class="content-likenews">
                         <i class="fas fa-thumbtack"></i> 찜하기
+                    </button>
+                    <button v-if="isLoggedIn&flag" @click="cancleNews(maincontent.url)" class="content-likenews">
+                        <i class="fas fa-thumbtack"></i> 찜취소
                     </button>
                 </div>
             </div>
@@ -39,12 +42,13 @@ export default {
     data() {
         return {
             maincontent: [],
-            isLoggedIn: false
+            isLoggedIn: false,
+            flag:false,
         }
     },
     created() {
-        this.getContents()
         this.login_check()
+        this.getContents()
     },
     mounted() {
         this.login_check()
@@ -65,12 +69,30 @@ export default {
             .then((res) => {
                 this.maincontent = res.data.object
                 this.maincontent.locate = require('@/assets'+ this.maincontent.locate.slice(1,))
+                this.findLikeNews()
             })
             .catch((err) => console.log(err))
         },
         likeNews(urls) {
-            axios.get(constants.SERVER_URL + '/account/likenews', { params : { Token:this.$cookies.isKey('Auth-Token'), url:urls } })
+            axios.get(constants.SERVER_URL + '/account/likenews', { params : { Token:this.$cookies.get('Auth-Token'), url:urls } })
             .then((res) => {
+                console.log(res.data.object)
+                this.findLikeNews()
+            })
+            .catch((err) => console.log(err))
+        },
+        cancleNews(urls) {
+            axios.get(constants.SERVER_URL + '/account/likenews/delete', { params : { Token:this.$cookies.get('Auth-Token'), url:urls } })
+            .then((res) => {
+                console.log(res.data.object)
+                this.findLikeNews()
+            })
+            .catch((err) => console.log(err))
+        },
+        findLikeNews() {
+            axios.get(constants.SERVER_URL + '/account/likenews/find', { params : { Token:this.$cookies.get('Auth-Token'), url:this.maincontent.url } })
+            .then((res) => {
+                this.flag = res.data.object
                 console.log(res.data.object)
             })
             .catch((err) => console.log(err))
