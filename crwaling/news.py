@@ -46,7 +46,7 @@ def preprocessing_articles(content):
 # driver = webdriver.Chrome(executable_path="C:\\Program Files\\chromedriver\\chromedriver.exe")
 # driver = webdriver.Chrome("C:\\Users\\mycom\\Desktop\\new\\chromedriver.exe")
 driver = webdriver.Chrome(executable_path="C:\\Program Files\\chromedriver\\chromedriver.exe")
-driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102")
+driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105")
 driver.find_element_by_xpath("//*[@id='main_content']/div/div[2]/div[2]/div/a").click()
 
 dt = datetime.datetime.now()
@@ -92,8 +92,8 @@ for i in range(0, len(titles),2 ):
 
 mainList = dict()
 num = 0
-for j in range(1,2):
-    driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
+for j in range(1,7):
+    driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
     time.sleep(2)
     driver.implicitly_wait(60)
 
@@ -102,8 +102,8 @@ for j in range(1,2):
     main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
 
     k = 0
-    # while k < len(main_url):
-    while k < 3:
+    while k < len(main_url):
+    # while k < 3:
         main_content = dict()   
         url = main_url[k].get_attribute('href')
         
@@ -141,11 +141,11 @@ for j in range(1,2):
         print('keywords :',textrank.keywords())
         main_content['keyword'] = textrank.keywords()
         # main_content['locate'] = './img/society/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
-        main_content['locate'] = './img/society/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
+        main_content['locate'] = './img/itscience/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
         mainList[str(num)] = main_content
 
         # f.write("본문 : [" + article.text + "]\n")
-        driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
+        driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
         main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
         
         k += 1

@@ -4,8 +4,8 @@ import pymongo
 
 client = pymongo.MongoClient(HOSTNAME, PORT)
 db = client.news
-# collection = db.itscience
+collection = db.itscience
 # collection = db.economy
-collection = db.society
+# collection = db.society
 def save(date,headlineList,mainList):
     collection.save({"date": date, "headline": headlineList, "main":mainList})
