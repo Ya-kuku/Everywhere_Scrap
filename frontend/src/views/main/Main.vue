@@ -1,14 +1,10 @@
 <template>
     <div>
-        <div>
-            <img class="main-img" :src="main1" />
-        </div>
-        <div class="main-btns">
-            <div class="container">
-                <button @click="goNews(1)" class="main-btn">ECONOMY</button>
-                <button @click="goNews(2)" class="main-btn">SOCIAL</button>
-                <button @click="goNews(3)" class="main-btn">IT/SCIENCE</button>
-            </div>
+        <img class="main-img" :src="main1" />
+        <div class="container" style="margin-top:30rem;">
+            <button @click="goNews(1)" class="main-btn">ECONOMY</button>
+            <button @click="goNews(2)" class="main-btn">SOCIAL</button>
+            <button @click="goNews(3)" class="main-btn">IT/SCIENCE</button>
         </div>
     </div>
 </template>

@@ -23,9 +23,18 @@
     </div>
     <div class="container pf-body">
       <div class="pf-cate">
-        <button>경제</button>
-        <button>사회</button>
-        <button>IT/과학</button>
+        <button class="pf-cates" @click="getLikeNews(1)">경제</button>
+        <button class="pf-cates" @click="getLikeNews(2)">사회</button>
+        <button class="pf-cates" @click="getLikeNews(3)">IT/과학</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="pf-news">
+        <div class="pf-news-one" v-for="news in data" :key="news.id">
+          <div @click="goContent(news.locate)">
+            <i class="fas fa-hand-point-right my-auto" style="margin-right:1rem;color:#82bcff;"></i>{{news.title}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -44,6 +53,7 @@ export default {
         return {
           wordcloud:wordcloud,
           profileData:[],
+          data: [],
         }
     },
     created() {
@@ -60,13 +70,23 @@ export default {
           this.isLoggedIn = false
         }
       },
+      getLikeNews(flag) {
+        console.log(this.profileData.likenews)
+        if (flag == 1) {
+          this.data = this.profileData.likenews.Economy
+        } else if (flag == 2) {
+          this.data = this.profileData.likenews.Society
+        } else {
+          this.data = this.profileData.likenews.ItScience
+        }
+      },
       userInfo() {
         const token = this.$cookies.get("Auth-Token");
         axios
         .get(constants.SERVER_URL + '/account/profile', { params: { Token: token } })
         .then((res)=> {
-          this.profileData = res.data.object;
-          console.log(res.data.object)
+          this.profileData = res.data.object[0];
+          this.getLikeNews(1)
         })
       },
       doDelete() {
@@ -112,7 +132,11 @@ export default {
             }
           }
         );
-      }
+      },
+      goContent(locate) {
+          let path = locate.slice(6,-4).split('/')
+          this.$router.push({name:'Newscontents', params:{cate:path[0], day:path[1], time:path[2], num:path[3]}})
+      },
     }
 }
 </script>

@@ -46,7 +46,7 @@ def preprocessing_articles(content):
 # driver = webdriver.Chrome(executable_path="C:\\Program Files\\chromedriver\\chromedriver.exe")
 # driver = webdriver.Chrome("C:\\Users\\mycom\\Desktop\\new\\chromedriver.exe")
 driver = webdriver.Chrome(executable_path="C:\\Program Files\\chromedriver\\chromedriver.exe")
-driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102")
+driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105")
 driver.find_element_by_xpath("//*[@id='main_content']/div/div[2]/div[2]/div/a").click()
 
 dt = datetime.datetime.now()
@@ -58,11 +58,9 @@ filename = 'news_' + dt.strftime("%Y_%m_%d_%H_%M")
 
 # 당일 날짜 시간
 # f.write(dt.strftime("%Y%m%d%H")+"\n")
-# date = dt.strftime("%Y%m%d%H")
-date = "2021020917"
+date = dt.strftime("%Y%m%d%H")
 png_name1 = dt.strftime("%m%d")
-# png_name2 = dt.strftime("%H")
-png_name2 = '17'
+png_name2 = dt.strftime("%H")
 
 # 헤드라인
 titles = driver.find_elements_by_css_selector('.cluster_head_inner > div > h2 > a > span')
@@ -95,7 +93,7 @@ for i in range(0, len(titles),2 ):
 mainList = dict()
 num = 0
 for j in range(1,7):
-    driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
+    driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
     time.sleep(2)
     driver.implicitly_wait(60)
 
@@ -143,11 +141,11 @@ for j in range(1,7):
         print('keywords :',textrank.keywords())
         main_content['keyword'] = textrank.keywords()
         # main_content['locate'] = './img/society/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
-        main_content['locate'] = './img/society/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
+        main_content['locate'] = './img/itscience/'+str(png_name1)+'/'+str(png_name2)+'/'+str(num)+'.png'
         mainList[str(num)] = main_content
 
         # f.write("본문 : [" + article.text + "]\n")
-        driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=102" + "#&date=2000:00:00" + "&page=" + str(j))
+        driver.get("https://news.naver.com/main/main.nhn?mode=LSD&mid=shm&sid1=105" + "#&date=2000:00:00" + "&page=" + str(j))
         main_url = driver.find_elements_by_css_selector('#section_body > ul > li > dl > dt:nth-child(2) > a')
         
         k += 1

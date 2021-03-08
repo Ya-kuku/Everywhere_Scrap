@@ -108,3 +108,28 @@
 .pf-body {
     margin-top:10rem;
 }
+
+.pf-news {
+    margin:2rem auto;
+    width:100%;
+    min-height:20rem;
+    padding: 1.6rem;
+    font-size: 2rem;
+    border-radius: 1.5rem;
+    /* border: 3px solid #82bcff; */
+    box-shadow: 2px 2px 20px #93959791;
+}
+
+.pf-news-one {
+    display:flex;
+    width:100%;
+    margin:2rem auto;
+}
+
+.pf-cates {
+    background-color: #93959754;
+}
+
+.pf-cates:hover {
+    background-color: #93959783;
+}

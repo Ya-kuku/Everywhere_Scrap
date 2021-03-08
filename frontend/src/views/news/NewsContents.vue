@@ -1,15 +1,31 @@
 <template>
     <div class="topmg">
-        <div class="news-body container">
-            <div class="detail-body-title">News Content</div>
-            <div class="headline-body">
-                {{maincontent.title}}
-                <div v-for="sum in maincontent.summary" :key="sum.id">
-                    {{sum}}
+        <div class="container">
+            <div>
+                <a target="_blank" style="text-decoration:none;" :href="maincontent.url">
+                    <div class="content-title">{{maincontent.title}}</div>
+                </a>
+                <div class="content-keywordss">
+                    <div class="content-keywords" v-for="key in maincontent.keyword" :key="key.id">
+                        <span class="content-keyword">{{key}}</span>
+                    </div>
                 </div>
-                {{maincontent.url}}
-                {{maincontent.keyword}}
-                <img :src='locate_img' alt="">
+                <div class="content">
+                    <div>
+                        <img :src='maincontent.locate' alt="">
+                    </div>
+                    <div>
+                        <div class="content-summary" v-for="sum in maincontent.summary" :key="sum.id">
+                            {{sum}}
+                        </div>
+                    </div>
+                    <button v-if="isLoggedIn&!flag" @click="likeNews(maincontent.url)" class="content-likenews">
+                        <i class="fas fa-thumbtack"></i> 찜하기
+                    </button>
+                    <button v-if="isLoggedIn&flag" @click="cancleNews(maincontent.url)" class="content-likenews">
+                        <i class="fas fa-thumbtack"></i> 찜취소
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -23,44 +39,65 @@ import constants from '../../lib/constants'
 
 export default {
     name:"Newscontents",
-    props : {
-        locate: {
-            type: String,
-            default:'',
+    data() {
+        return {
+            maincontent: [],
+            isLoggedIn: false,
+            flag:false,
         }
     },
     created() {
+        this.login_check()
         this.getContents()
     },
-    data() {
-        return {
-            tmp : '2021',
-            index: '',
-            // title:'',
-            // url:'',
-            // summary:'',
-            // keyword: [],
-            locate_img:Image,
-            maincontent: []
-
-        }
+    mounted() {
+        this.login_check()
     },
     methods:{
-        getContents() {
-            // let cate = new Array()
-            let cate = this.locate.split('/')
-            this.tmp += cate[1] + cate[2]
-            this.index =cate[3]
-            axios.get(constants.SERVER_URL + '/news/'+cate[0]+'/contents', { params : { date:this.tmp, index:this.index } })
-            .then((res) => {
-                console.log(res)
-                this.maincontent = res.data.object
-                this.locate_img = require('@/assets'+ this.maincontent.locate.slice(1,))
-                console.log(this.locate1)
+        login_check(){
+            if (this.$cookies.isKey('Auth-Token')) {
+                this.isLoggedIn = true
+            } else{
+                this.isLoggedIn = false
+            }
         },
-            )
+        getContents() {
+            let cate = this.$route.path.slice(6,).split('/')
+            let tmp = '2021' + cate[1] + cate[2]
+            let index = cate[3]
+            axios.get(constants.SERVER_URL + '/news/'+ cate[0] +'/contents', { params : { date:tmp, index:index } })
+            .then((res) => {
+                this.maincontent = res.data.object
+                this.maincontent.locate = require('@/assets'+ this.maincontent.locate.slice(1,))
+                this.findLikeNews()
+            })
+            .catch((err) => console.log(err))
+        },
+        likeNews(urls) {
+            axios.get(constants.SERVER_URL + '/account/likenews', { params : { Token:this.$cookies.get('Auth-Token'), url:urls } })
+            .then((res) => {
+                console.log(res.data.object)
+                this.findLikeNews()
+            })
+            .catch((err) => console.log(err))
+        },
+        cancleNews(urls) {
+            axios.get(constants.SERVER_URL + '/account/likenews/delete', { params : { Token:this.$cookies.get('Auth-Token'), url:urls } })
+            .then((res) => {
+                console.log(res.data.object)
+                this.findLikeNews()
+            })
+            .catch((err) => console.log(err))
+        },
+        findLikeNews() {
+            axios.get(constants.SERVER_URL + '/account/likenews/find', { params : { Token:this.$cookies.get('Auth-Token'), url:this.maincontent.url } })
+            .then((res) => {
+                this.flag = res.data.object
+                console.log(res.data.object)
+            })
+            .catch((err) => console.log(err))
+        }
     }
-}
 }
 </script>
 

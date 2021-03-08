@@ -1,37 +1,40 @@
 <template>
   <div class="topmg">
-    <div class="news-head"> 
-      <div class="news-title">{{ date }} <i @click="reload" style="cursor:pointer;color:#F5dF4D;" class="fas fa-sync fa-xs"></i></div>
+    <div class="news-title"> 
+      <div class="news-title-name">
+        {{ date }} <i @click="reload" style="cursor:pointer;color:#F5dF4D;" class="fas fa-sync fa-xs"></i>
+      </div>
     </div>
     <div class="container">
       <div>
-        <div class="headline-title" @click="goNews(1)">경제</div>
-        <div class="news-headline">
-          <div v-for="h in economy_head" :key="h.id">
-            <div class="headline-body">{{ h.title }}</div>
-          </div>
+        <div class="headline-title">
+          <div @click="getHead(1)">경제</div>
         </div>
       </div>
       <div>
-        <div class="headline-title" @click="goNews(2)">사회</div>
-        <div class="news-headline">
-          <div v-for="h in economy_head" :key="h.id">
-            <div class="headline-body">{{ h.title }}</div>
-          </div>
+        <div class="headline-title">
+          <div @click="getHead(2)">사회</div>
         </div>
       </div>
       <div>
-        <div class="headline-title" @click="goNews(3)">IT/과학</div>
-        <div class="news-headline">
-          <div v-for="h in economy_head" :key="h.id">
-            <div class="headline-body">{{ h.title }}</div>
-          </div>
+        <div class="headline-title">
+          <div @click="getHead(3)">IT/과학</div>
         </div>
       </div>
     </div>
-    <div class="news-body container">
-      <div>
-        <div class="detail-body-title">전체 NEWS</div>
+    <div class="container">
+      <div class="news-headline">
+        <button v-if="num==1" @click="goNews(num)" class="go-news-btn"><i style="cursor:pointer;" class="fas fa-home"></i> 경제</button>
+        <button v-if="num==2" @click="goNews(num)" class="go-news-btn"><i style="cursor:pointer;" class="fas fa-home"></i> 사회</button>
+        <button v-if="num==3" @click="goNews(num)" class="go-news-btn"><i style="cursor:pointer;" class="fas fa-home"></i> IT/과학</button>
+        <div v-for="h in head" :key="h.id">
+          <a target="_blank" :href="h.url"><div class="headline-body">{{ h.title }}</div></a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="news-body">
+        <div class="news-body-title">전체 NEWS</div>
         <div v-for="news in allnews" :key="news.id">
           <div @click="goContent(news.locate)" class="headline-body">{{ news.title }}</div>
         </div>
@@ -58,19 +61,15 @@ export default {
     return {
       dateCheck:'',
       date:'',
-      economy_head:[],
-      society_head:[],
-      itscience_head:[],
-      allnews: [],
+      num:1,
+      head:[],
       locate:'',
-      // economy: [],
-      // society: [],
-      // itscience: [],
+      allnews: [],
     }
   },
   created() {
     this.getToday();
-    this.getHead();
+    this.getHead(1);
     this.getNews();
   },
   methods: {
@@ -108,43 +107,43 @@ export default {
       this.dateCheck = year + month + day + time_check;
       this.date = year +'년 ' + month + '월 ' + day + '일 ' + time + '시';
     },
-    getHead() {
-      axios.get(constants.SERVER_URL + '/news/economy/headline', { params : { date:this.dateCheck } })
-      .then((res) => {
-        this.economy_head = res.data.object.headline
-      })
-      .catch((err) => {console.log(err)})
+    getHead(tmp) {
+      this.num = tmp
+      if (tmp == 1) {
+        axios.get(constants.SERVER_URL + '/news/economy/headline', { params : { date:this.dateCheck } })
+        .then((res) => {
+          this.head = []
+          for (var i=1;i<9;i++) {
+            this.head.push(res.data.object[i])
+          }
+        })
+        .catch((err) => {console.log(err)})
+      } else if (tmp == 3) {
+        axios.get(constants.SERVER_URL + '/news/itscience/headline', { params : { date:this.dateCheck } })
+        .then((res) => {
+          this.head = []
+          for (var i=1;i<9;i++) {
+            this.head.push(res.data.object[i])
+          }
+        })
+        .catch((err) => {console.log(err)})
+      } else {
+        axios.get(constants.SERVER_URL + '/news/society/headline', { params : { date:this.dateCheck } })
+        .then((res) => {
+          this.head = []
+          for (var i=1;i<9;i++) {
+            this.head.push(res.data.object[i])
+          }
+        })
+        .catch((err) => {console.log(err)})
+      }
     },
     getNews() {
       axios.get(constants.SERVER_URL + '/news/all', { params : { date: this.dateCheck } })
       .then((res) => {
-        console.log(res.data.object)
         this.allnews = res.data.object
-        console.log(this.allnews)
       })
       .catch((err) => {console.log(err)})
-      // axios.get(constants.SERVER_URL + '/news/economy')
-      // .then((res) => {
-      //   this.economy = res.data.object
-      // })
-      // .catch((err) => {console.log(err)})
-
-      // axios.get(constants.SERVER_URL + '/news/society')
-      // .then((res) => {
-      //   this.society = res.data.object
-      // })
-      // .catch((err) => {console.log(err)})
-
-      // axios.get(constants.SERVER_URL + '/news/itscience')
-      // .then((res) => {
-      //   for(var i=0;i<res.data.object.length;i++){
-      //     let tmp = res.data.object[i].main
-      //     for (var j in tmp){
-      //       this.itscience.push(tmp[j])
-      //     }
-      //   }
-      // })
-      // .catch((err) => {console.log(err)})
     },
     reload() {
       this.$router.go()
@@ -153,8 +152,8 @@ export default {
       this.$router.push({name:'Newsdetail', params:{cate:category}})
     },
     goContent(locate) {
-      let path = locate.slice(6,-4)
-      this.$router.push({name:'Newscontents', params:{locate:path}})
+      let path = locate.slice(6,-4).split('/')
+      this.$router.push({name:'Newscontents', params:{cate:path[0], day:path[1], time:path[2], num:path[3]}})
     },
   }
 }

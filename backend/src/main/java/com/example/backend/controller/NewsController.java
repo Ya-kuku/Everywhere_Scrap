@@ -83,7 +83,7 @@ public class NewsController {
         
         ArrayList<Object> allEconomy = new ArrayList<>();
         for (var i=0;i<economy.size();i++) {
-            for (var j=1;j<=economy.get(i).getMain().size();j++) {
+            for (var j=0;j<=economy.get(i).getMain().size();j++) {
                 allEconomy.add(economy.get(i).getMain().get(Integer.toString(j)));
             }
         }
@@ -126,7 +126,7 @@ public class NewsController {
         
         ArrayList<Object> allItscience = new ArrayList<>();
         for (var i=0;i<itscience.size();i++) {
-            for (var j=1;j<=itscience.get(i).getMain().size();j++) {
+            for (var j=0;j<=itscience.get(i).getMain().size();j++) {
                 allItscience.add(itscience.get(i).getMain().get(Integer.toString(j)));
             }
         }
@@ -168,7 +168,7 @@ public class NewsController {
         
         ArrayList<Object> allSociety = new ArrayList<>();
         for (var i=0;i<society.size();i++) {
-            for (var j=1;j<=society.get(i).getMain().size();j++) {
+            for (var j=0;j<=society.get(i).getMain().size();j++) {
                 allSociety.add(society.get(i).getMain().get(Integer.toString(j)));
             }
         }
